@@ -3,7 +3,6 @@ package main;
 import java.sql.SQLException;
 
 import connection.ConnectDB;
-import ui.frm_TrangChu;
 
 public class Starting {
     public static void main(String[] args) throws SQLException {
@@ -17,8 +16,8 @@ public class Starting {
         }
         ConnectDB.getInstance().connect();
         // ScreenLogin frm_Login = new ScreenLogin();
-        frm_TrangChu.setVisible(true);
-        frm_TrangChu.setLocationRelativeTo(null);
+        // frm_TrangChu.setVisible(true);
+        // frm_TrangChu.setLocationRelativeTo(null);
 
     }
 }
