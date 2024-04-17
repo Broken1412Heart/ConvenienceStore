@@ -1,0 +1,378 @@
+package ui;
+
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+
+public class frm_TrangChu extends JFrame{
+	// variable declare
+	JPanel tabPanel1;
+	JPanel tabPanel2;
+	JPanel tabPanel3;
+	JPanel tabPanel4;
+		// Nhân viên
+	JTextField txtMaNV, txtTenNV, txtGioiTinhNV, txtNgaySinhNV,
+		txtEmailNV, txtTrangThaiNV, txtNgayDiLamNV, txtSDTNV, txtTimNV;
+	ButtonGroup groupGT,groupTrangThai;
+	JRadioButton rbtnNVNam,rbtnNVNu, rbtnNV_CoDiLam, rbtnNV_NghiLam;
+	JComboBox cbChucVuNV; 
+	JButton btnThemNV, btnXoaRongNV, btnSuaNV, btnXoaNV, btnTimNV;
+	DefaultTableModel modelNV;
+	JTable tableNV;
+	JScrollPane scrollNV;
+		// Hóa đơn
+	JTextField txtMaHD, txtMaKH_HD,txtMaNV_HD , txtNgayLapHD,
+			txtTongTien, txtTimHD;
+	ButtonGroup groupTT_HD;
+	JRadioButton rbtnTrangThaiHD_HT,rbtnTrangThaiHD_ChuaHT;
+	JComboBox cbPhuongThucTT_HD;
+	JButton btnThemHD, btnXoaRongHD, btnSuaHD, btnXoaHD, btnTimHD;
+	DefaultTableModel modelHD;
+	JTable tableHD;
+	JScrollPane scrollHD;
+		// Phiếu nhập hàng
+	JTextField txtMaPhieuNhapSP, txtMaNCC, txtTenSP, txtNgayNhap, txtMaNhanVien_NhapSP, txtTimPhieuNhap;
+	ButtonGroup groupTT_NhapSP;
+	JRadioButton rbtnTrangThaiNhap_HT,rbtnTrangThaiNhap_ChuaHT;
+	JButton btnThemPhieuNhap, btnXoaRongPhieuNhap, btnSuaPhieuNhap, btnXoaPhieuNhap, btnTimPhieuNhap;
+	DefaultTableModel modelPhieuNhap;
+	JTable tablePhieuNhap;
+	JScrollPane scrollPhieuNhap;
+	public frm_TrangChu() {
+		init_UI();
+		
+	}
+	
+	// create ui for application
+	void init_UI() {
+		this.setTitle("ConvenienceStore");
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// component
+		JTabbedPane tabbedPane = new JTabbedPane();
+		tabPanel1 = new JPanel(); // container tab1
+		tabPanel2 = new JPanel(); // container tab2
+		tabPanel3 = new JPanel(); // container tab3
+		tabPanel4 = new JPanel(); // container tab4 
+		tabbedPane.addTab("Quản lý hóa đơn bán hàng", null, tabPanel1, "Đây là tab 1");
+		tabbedPane.addTab("Quản lý phiếu nhập hàng", null, tabPanel2, "Đây là tab 2");
+		tabbedPane.addTab("Quản lý phiếu đặt sản phẩm", null, tabPanel3, "Đây là tab 3");
+		tabbedPane.addTab("Quản lý nhân viên", null, tabPanel4, "Đây là tab 4");
+		
+		// call method create ui
+		ui_NhanVien();
+		ui_HoaDon();
+		ui_PhieuNhapHang();
+		// add component into frame
+		this.add(tabbedPane);
+		//set size in final code
+		this.setSize(1920, 1032);	
+		
+	}
+	
+	// giao diện tab phiếu đặt hàng
+	void ui_PhieuDatHang() {
+		
+	}
+	
+	//giao diện tab phiếu nhập hàng
+	void ui_PhieuNhapHang() {
+		JPanel jpnContain = new JPanel();
+		jpnContain.setLayout(new BorderLayout());
+		
+		//north
+		JPanel jpnNorth = new JPanel();
+		Box box1,box2,box3,boxContain;
+		boxContain = Box.createVerticalBox();
+		box1 = Box.createHorizontalBox();
+		box2 = Box.createHorizontalBox();
+		box3 = Box.createHorizontalBox();
+		
+		box1.add(new JLabel("Mã phiếu nhập:"));
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(txtMaPhieuNhapSP = new JTextField(50));
+		box1.add(Box.createHorizontalStrut(20));
+		box1.add(new JLabel("Mã nhà cung cấp:"));
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(txtMaNCC = new JTextField(50));
+		box1.add(Box.createHorizontalStrut(20));
+		
+		box2.add(new JLabel("Tên sản phẩm:"));
+		box2.add(Box.createHorizontalStrut(10));
+		box2.add(txtTenSP = new JTextField(50));
+		box2.add(Box.createHorizontalStrut(20));
+		box2.add(new JLabel("Ngày lặp:"));
+		box2.add(Box.createHorizontalStrut(10));
+		box2.add(txtNgayNhap = new JTextField(50));
+
+		
+		box3.add(new JLabel("Trạng thái:"));
+		box3.add(Box.createHorizontalStrut(5));
+		box3.add(rbtnTrangThaiNhap_HT = new JRadioButton("Hoàn thành"));
+		box3.add(rbtnTrangThaiNhap_ChuaHT = new JRadioButton("Chưa hoàn thành"));
+		groupTT_NhapSP = new ButtonGroup();
+		groupTT_NhapSP.add(rbtnTrangThaiNhap_HT);
+		groupTT_NhapSP.add(rbtnTrangThaiNhap_ChuaHT);
+		box3.add(Box.createHorizontalStrut(50));
+		box3.add(new JLabel("Mã nhân viên:"));
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(txtMaNhanVien_NhapSP = new JTextField(50));
+		
+		boxContain.add(box1);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box2);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box3);
+		Border border = BorderFactory.createTitledBorder("Cập nhật hóa đơn");
+		boxContain.setBorder(border);
+		
+		//center
+		JPanel jpnCenter = new JPanel();
+		Box boxContain1 = Box.createHorizontalBox(); 
+		Box box4 = Box.createHorizontalBox();
+		box4.add(btnThemPhieuNhap = new JButton("Thêm"));
+		box4.add(btnSuaPhieuNhap = new JButton("Sửa"));
+		box4.add(btnXoaRongPhieuNhap = new JButton("Xóa rỗng"));
+		box4.add(btnXoaPhieuNhap = new JButton("Xóa"));
+		box4.add(Box.createHorizontalStrut(50));
+		box4.add(txtTimPhieuNhap = new JTextField(15));
+		box4.add(btnTimPhieuNhap = new JButton("Tìm hóa đơn"));
+		
+		
+		boxContain1.add(box4);
+		jpnCenter.add(boxContain1);
+		
+		// south
+		JPanel jpnSouth = new JPanel();
+		jpnSouth.setLayout(new BorderLayout());
+		Border borderDSNV = BorderFactory.createTitledBorder("Danh sách các nhân viên");
+		String[] colName = {"Mã phiếu nhập", "Mã nhà cung cấp", "Tên sản phẩm", "Ngày lặp",
+				"Trạng thái", "Mã nhân viên"};
+		modelNV = new DefaultTableModel(colName,0);
+		tableNV = new JTable(modelNV);
+		scrollNV = new JScrollPane(tableNV);
+		
+		jpnSouth.add(scrollNV);
+		jpnSouth.setBorder(borderDSNV);
+		
+		// add component into tab Hóa đơn
+		jpnNorth.add(boxContain);
+		jpnContain.add(jpnNorth, BorderLayout.NORTH);
+		jpnContain.add(jpnCenter, BorderLayout.CENTER);
+		jpnContain.add(jpnSouth, BorderLayout.SOUTH);
+		tabPanel2.add(jpnContain);
+	}
+	
+	// giao diện tab hóa đơn
+	void ui_HoaDon() {
+		JPanel jpnContain = new JPanel();
+		jpnContain.setLayout(new BorderLayout());
+		
+		//north
+		JPanel jpnNorth = new JPanel();
+		Box box1,box2,box3,boxContain;
+		boxContain = Box.createVerticalBox();
+		box1 = Box.createHorizontalBox();
+		box2 = Box.createHorizontalBox();
+		box3 = Box.createHorizontalBox();
+		
+		box1.add(new JLabel("Mã Hóa đơn:"));
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(txtMaHD = new JTextField(40));
+		box1.add(Box.createHorizontalStrut(20));
+		box1.add(new JLabel("Mã KH:"));
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(txtMaKH_HD = new JTextField(40));
+		box1.add(Box.createHorizontalStrut(20));
+		box1.add(new JLabel("Mã nhân viên:"));
+		box1.add(Box.createHorizontalStrut(10));
+		box1.add(txtMaNV_HD = new JTextField(40));
+		
+		
+		box2.add(new JLabel("Ngày lặp:"));
+		box2.add(Box.createHorizontalStrut(10));
+		box2.add(txtNgayLapHD = new JTextField(40));
+		box2.add(Box.createHorizontalStrut(20));
+		box2.add(new JLabel("Trạng thái:"));
+		box2.add(Box.createHorizontalStrut(5));
+		box2.add(rbtnTrangThaiHD_HT = new JRadioButton("Hoàn thành"));
+		box2.add(rbtnTrangThaiHD_ChuaHT = new JRadioButton("Chưa hoàn thành"));
+		groupTT_HD = new ButtonGroup();
+		groupTT_HD.add(rbtnTrangThaiHD_HT);
+		groupTT_HD.add(rbtnTrangThaiHD_ChuaHT);
+		
+		box3.add(new JLabel("Phương thức TT:"));
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(cbPhuongThucTT_HD = new JComboBox());
+		cbPhuongThucTT_HD.addItem("Pay by card");
+		cbPhuongThucTT_HD.addItem("Pay in cash");
+		box3.add(Box.createHorizontalStrut(20));
+		box3.add(new JLabel("Tổng tiền: "));
+		box3.add(Box.createHorizontalStrut(10));
+		box3.add(txtTongTien = new JTextField(40));	
+		
+		boxContain.add(box1);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box2);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box3);
+		Border border = BorderFactory.createTitledBorder("Cập nhật hóa đơn");
+		boxContain.setBorder(border);
+		
+		//center
+		JPanel jpnCenter = new JPanel();
+		Box boxContain1 = Box.createHorizontalBox(); 
+		Box box4 = Box.createHorizontalBox();
+		box4.add(btnThemHD = new JButton("Thêm"));
+		box4.add(btnSuaHD = new JButton("Sửa"));
+		box4.add(btnXoaRongHD = new JButton("Xóa rỗng"));
+		box4.add(btnXoaHD = new JButton("Xóa"));
+		box4.add(Box.createHorizontalStrut(50));
+		box4.add(txtTimHD = new JTextField(15));
+		box4.add(btnTimHD = new JButton("Tìm hóa đơn"));
+		
+		
+		boxContain1.add(box4);
+		jpnCenter.add(boxContain1);
+		
+		// south
+		JPanel jpnSouth = new JPanel();
+		jpnSouth.setLayout(new BorderLayout());
+		Border borderDSNV = BorderFactory.createTitledBorder("Danh sách các nhân viên");
+		String[] colName = {"Mã hóa đơn", "Mã KH", "Mã nhân viên", "Ngày lặp",
+				"Trạng thái", "Phương thức TT", "Tổng tiền"};
+		modelNV = new DefaultTableModel(colName,0);
+		tableNV = new JTable(modelNV);
+		scrollNV = new JScrollPane(tableNV);
+		
+		jpnSouth.add(scrollNV);
+		jpnSouth.setBorder(borderDSNV);
+		
+		// add component into tab Hóa đơn
+		jpnNorth.add(boxContain);
+		jpnContain.add(jpnNorth, BorderLayout.NORTH);
+		jpnContain.add(jpnCenter, BorderLayout.CENTER);
+		jpnContain.add(jpnSouth, BorderLayout.SOUTH);
+		tabPanel1.add(jpnContain);
+	}
+	
+	// giao dien tab nhân viên
+	void ui_NhanVien() {
+		JPanel jpnContain = new JPanel();
+		jpnContain.setLayout(new BorderLayout());
+		
+		//north
+		JPanel jpnNorth = new JPanel();
+		Box box1,box2,box3,boxContain;
+		boxContain = Box.createVerticalBox();
+		box1 = Box.createHorizontalBox();
+		box2 = Box.createHorizontalBox();
+		box3 = Box.createHorizontalBox();
+		
+		box1.add(new JLabel("Mã nhân viên:"));
+		box1.add(Box.createHorizontalStrut(20));
+		box1.add(txtMaNV = new JTextField(50));
+		box1.add(Box.createHorizontalStrut(50));
+		box1.add(new JLabel("Tên nhân viên:"));
+		box1.add(Box.createHorizontalStrut(20));
+		box1.add(txtTenNV = new JTextField(50));
+		box1.add(Box.createHorizontalStrut(50));
+		box1.add(new JLabel("Giới tính:"));
+		groupGT = new ButtonGroup();
+		rbtnNVNam = new JRadioButton("Nam");
+		rbtnNVNu = new JRadioButton("Nữ");
+		groupGT.add(rbtnNVNam);
+		groupGT.add(rbtnNVNu);
+		box1.add(rbtnNVNam);
+		box1.add(rbtnNVNu);
+		
+		box2.add(new JLabel("Ngày sinh:"));
+		box2.add(Box.createHorizontalStrut(20));
+		box2.add(txtNgaySinhNV = new JTextField(50));
+		box2.add(Box.createHorizontalStrut(50));
+		box2.add(new JLabel("Email:"));
+		box2.add(Box.createHorizontalStrut(20));
+		box2.add(txtEmailNV = new JTextField(50));
+		box2.add(Box.createHorizontalStrut(20));
+		box2.add(new JLabel("Chức vụ:"));
+		box2.add(Box.createHorizontalStrut(10));
+		box2.add(cbChucVuNV = new JComboBox());
+		box2.add(Box.createHorizontalStrut(50));
+		cbChucVuNV.addItem("Bán hàng");
+		cbChucVuNV.addItem("Quản lý");
+		cbChucVuNV.addItem("Kế toán");
+		
+		box3.add(new JLabel("Trạng thái"));
+		groupTrangThai = new ButtonGroup();
+		box3.add(rbtnNV_CoDiLam = new JRadioButton("Có đi làm"));
+		box3.add(rbtnNV_NghiLam = new JRadioButton("Nghỉ làm"));
+		groupTrangThai.add(rbtnNV_CoDiLam);
+		groupTrangThai.add(rbtnNV_NghiLam);
+		box3.add(Box.createHorizontalStrut(50));
+		box3.add(new JLabel("Ngày đi làm:"));
+		box3.add(Box.createHorizontalStrut(20));
+		box3.add(txtNgayDiLamNV = new JTextField(50));
+		box3.add(Box.createHorizontalStrut(50));
+		box3.add(new JLabel("Số điện thoại:"));
+		box3.add(Box.createHorizontalStrut(20));
+		box3.add(txtSDTNV = new JTextField(50));	
+		
+		boxContain.add(box1);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box2);
+		boxContain.add(Box.createVerticalStrut(20));
+		boxContain.add(box3);
+		Border border = BorderFactory.createTitledBorder("Cập nhật nhân viên");
+		boxContain.setBorder(border);
+		
+		//center
+		JPanel jpnCenter = new JPanel();
+		Box boxContain1 = Box.createHorizontalBox(); 
+		Box box4 = Box.createHorizontalBox();
+		box4.add(btnThemNV = new JButton("Thêm"));
+		box4.add(btnSuaNV = new JButton("Sửa"));
+		box4.add(btnXoaRongNV = new JButton("Xóa rỗng"));
+		box4.add(btnXoaNV = new JButton("Xóa"));
+		box4.add(Box.createHorizontalStrut(50));
+		box4.add(txtTimNV = new JTextField(15));
+		box4.add(btnTimNV = new JButton("Tìm NV"));
+		
+		
+		boxContain1.add(box4);
+		jpnCenter.add(boxContain1);
+		
+		// south
+		JPanel jpnSouth = new JPanel();
+		jpnSouth.setLayout(new BorderLayout());
+		Border borderDSHD = BorderFactory.createTitledBorder("Danh sách các nhân viên");
+		String[] colName = {"Mã nhân viên", "Tên NV", "Giới tính", "Ngày sinh",
+				"Email", "Chức vụ", "Trạng thái", "Ngày đi làm", "Số điện thoại"};
+		modelHD = new DefaultTableModel(colName,0);
+		tableHD = new JTable(modelHD);
+		scrollHD = new JScrollPane(tableHD);
+		
+		jpnSouth.add(scrollHD);
+		jpnSouth.setBorder(borderDSHD);
+		
+		// add component into tab Nhan vien
+		jpnNorth.add(boxContain);
+		jpnContain.add(jpnNorth, BorderLayout.NORTH);
+		jpnContain.add(jpnCenter, BorderLayout.CENTER);
+		jpnContain.add(jpnSouth, BorderLayout.SOUTH);
+		tabPanel4.add(jpnContain);
+	}
+}
